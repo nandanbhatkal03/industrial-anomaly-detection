@@ -1,0 +1,15 @@
+data:
+  dataset: mvtec_ad
+  # Scope control (spec section 15): 3-5 representative categories first.
+  # Mix of textures (carpet) and objects (bottle, metal_nut, screw, transistor).
+  categories: [bottle, carpet, metal_nut, screw, transistor]
+  image_size: 256             # square resize (no crop => defects at borders are kept)
+  center_crop: null           # e.g. 224 to mimic the PatchCore protocol
+  val_fraction: 0.1           # share of train/good held out for threshold calibration
+  denoise: none               # none | gaussian | bilateral | nlm (may blur tiny defects)
+  augment:
+    enabled: false            # OFF by default: geometric aug can corrupt "normal"
+    color_jitter: 0.1
+    hflip: false
+  batch_size: 16
+  num_workers: 2              # set 0 on Windows if DataLoader workers misbehave

@@ -1,0 +1,66 @@
+# Keys must match the constructor arguments of the model classes.
+models:
+  autoencoder:                # reconstruction baseline
+    latent_channels: 64
+    sigma: 4.0
+  padim:                      # distribution baseline (Mahalanobis)
+    backbone: resnet18
+    layers: [layer1, layer2, layer3]
+    reduced_dim: 100
+    eps: 0.01
+    sigma: 4.0
+  patchcore:                  # memory-bank baseline (accuracy reference)
+    backbone: wide_resnet50_2
+    layers: [layer2, layer3]
+    local_kernel: 3
+    proj_dim: null
+    coreset_ratio: 0.1
+    coreset_method: greedy
+    feature_norm: false
+    memory_dtype: float32
+    k: 1
+    sigma: 4.0
+  student_teacher:            # student-teacher feature regression baseline
+    backbone: resnet18
+    layers: [layer1, layer2, layer3]
+    sigma: 4.0
+  efficientad_lite:           # EfficientAD-INSPIRED (tiny PDN student-teacher, hard-feature loss); not official
+    out_channels: 128
+    teacher_epochs: 30
+    student_epochs: 60
+    lr: 1.0e-3
+    sigma: 4.0
+  lightpatch:                 # proposed lightweight pipeline (see docs/HLD.md)
+    backbone: resnet18        # chosen experimentally: see ablation 'backbone'
+    layers: null              # null => per-backbone default mid-level layers
+    local_kernel: 3
+    proj_dim: 128
+    coreset_ratio: 0.05
+    coreset_method: greedy
+    feature_norm: true
+    memory_dtype: float16
+    k: 1
+    sigma: 4.0
+
+# Ablation groups for scripts/run_experiments.py --ablation <name>
+ablation:
+  backbone:
+    method: lightpatch
+    param: backbone
+    values: [resnet18, mobilenet_v3_large, mobilenet_v2, efficientnet_b0]
+  proj_dim:
+    method: lightpatch
+    param: proj_dim
+    values: [null, 256, 128, 64, 32]
+  coreset_ratio:
+    method: lightpatch
+    param: coreset_ratio
+    values: [0.01, 0.02, 0.05, 0.1, 0.25]
+  feature_norm:
+    method: lightpatch
+    param: feature_norm
+    values: [false, true]
+  coreset_method:
+    method: lightpatch
+    param: coreset_method
+    values: [random, greedy]

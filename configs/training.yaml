@@ -1,0 +1,10 @@
+# Only gradient-trained models need these (PaDiM / PatchCore / LightPatch are fit in one pass).
+training:
+  autoencoder:
+    epochs: 100
+    lr: 1.0e-3
+    weight_decay: 0.0
+  student_teacher:
+    epochs: 50
+    lr: 1.0e-3
+    weight_decay: 1.0e-4

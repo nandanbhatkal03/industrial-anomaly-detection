@@ -1,0 +1,41 @@
+seed: 42
+device: auto            # auto | cpu | cuda | mps
+pretrained: true        # false = random backbone weights (offline smoke tests ONLY, results meaningless)
+
+paths:
+  data_root: data/raw/mvtec_ad
+  splits: data/splits
+  checkpoints: models/checkpoints
+  results: results
+
+# Threshold calibration uses ONLY held-out defect-free (normal) validation images.
+# No test/anomalous image ever influences a deployable threshold.
+calibration:
+  image_method: mean_std      # mean_std | max | percentile
+  image_k: 3.0                # mean + k*std of normal validation scores
+  image_margin: 1.1           # used by method "max"
+  image_percentile: 99.0      # used by method "percentile"
+  pixel_percentile: 99.9      # percentile of normal-validation pixel scores
+
+postprocess:
+  open_kernel: 3
+  close_kernel: 5
+  min_region_area: 30         # pixels at model input resolution
+  severity_extent_ref: 0.05   # fraction of image area considered "large"
+  localize_only_if_anomalous: true
+
+evaluation:
+  aupro_fpr_limit: 0.3
+  aupro_thresholds: 300
+  max_pixels_for_oracle: 2000000
+  num_visualizations: 8
+  save_anomaly_maps: false
+
+benchmark:
+  warmup: 10
+  iters: 50
+  batch_size: 1
+
+tracking:
+  mlflow: false
+  experiment_name: industrial-anomaly-detection

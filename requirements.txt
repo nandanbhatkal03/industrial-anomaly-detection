@@ -1,0 +1,23 @@
+# Core (all open-source)
+torch>=2.2
+torchvision>=0.17
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.3
+opencv-python-headless>=4.8
+Pillow>=10.0
+PyYAML>=6.0
+matplotlib>=3.8
+psutil>=5.9
+# Experiment tracking (optional, enable with tracking.mlflow: true)
+mlflow>=2.9
+# Application
+streamlit>=1.32
+# Optional REST API
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9
+httpx>=0.27
+# Dev / tests
+pytest>=8.0
+jupyterlab>=4.0

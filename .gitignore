@@ -1,0 +1,29 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+mlruns/
+# datasets are licensed separately - never commit them
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+# large artefacts
+models/checkpoints/*.pt
+models/exported/*
+!models/checkpoints/.gitkeep
+!models/exported/.gitkeep
+results/anomaly_maps/*
+!results/anomaly_maps/.gitkeep
+results/inspection_log.csv
+
+# archives / large files (dataset is licensed separately - never commit it)
+*.tar
+*.tar.xz
+*.tar.gz
+*.zip
+*.pt
+*.pth
+*.ckpt
+.env
